@@ -7,7 +7,9 @@
 .buildlog/
 .history
 
-
+# 新增：排除本地开发工具配置文件
+.vscode/
+.idea/
 
 # Flutter repo-specific
 /bin/cache/
@@ -109,6 +111,10 @@ coverage/
 
 # Symbols
 app.*.symbols
+
+# 新增：排除环境变量配置文件
+.env
+.env.*
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
