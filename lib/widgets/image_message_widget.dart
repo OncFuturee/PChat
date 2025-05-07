@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
+// 图片消息组件
+// 用于显示图片消息的组件
 class ImageMessageWidget extends StatelessWidget {
   final String imagePath;
 

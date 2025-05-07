@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart'; // 添加导入
 import 'package:sqflite_common_ffi/sqflite_ffi.dart'; // 添加导入
 import 'package:flutter/foundation.dart'; // 添加导入
 import 'views/home_screen.dart';
+import 'widgets/global_notification.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +30,13 @@ class ChatApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      home: Stack(
+        clipBehavior: Clip.none, // 确保超出范围的组件不会被裁剪
+        children: [
+          const HomeScreen(), // 主页面
+          GlobalNotification(key: GlobalNotification.globalKey), // 使用 globalKey
+        ],
+      ),
     );
   }
 }

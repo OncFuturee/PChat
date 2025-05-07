@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'chat_screen.dart';
 import 'group_chat_screen.dart';
+import '../widgets/global_notification.dart';
 
+// 主页面
+// 用于显示聊天列表和聊天界面
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -9,6 +12,8 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+// 主页面状态类
+// 用于管理聊天列表和聊天界面的状态
 class _HomeScreenState extends State<HomeScreen> {
   int? _selectedChatIndex; // 当前选中的对话索引
   bool _isGroupChat = false; // 是否为群组聊天
@@ -215,9 +220,15 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.more_vert),
             onSelected: (value) {
               if (value == 'scan') {
-                // 扫一扫逻辑
+                GlobalNotification.show(
+                  context,
+                  '扫描功能尚未实现',
+                );
               } else if (value == 'add_friend') {
-                // 添加好友逻辑
+                GlobalNotification.show(
+                  context,
+                  '添加好友功能尚未实现',
+                );
               }
             },
             itemBuilder: (context) => [

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// 文本消息组件
+// 用于显示文本消息的组件
 class TextMessageWidget extends StatelessWidget {
   final String content;
 

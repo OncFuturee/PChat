@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// 联系人页面
+// 用于显示联系人列表
 class ContactsScreen extends StatelessWidget {
   const ContactsScreen({super.key});
 

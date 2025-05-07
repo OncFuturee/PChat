@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// 文件消息组件
+// 用于显示文件消息的组件
 class FileMessageWidget extends StatelessWidget {
   final String fileName;
   final String filePath;

@@ -3,6 +3,8 @@ import 'dart:io' show File; // 用于非 Web 平台的文件操作
 import 'package:flutter/foundation.dart'; // 用于判断平台
 import 'package:file_picker/file_picker.dart'; // 多平台文件选择器
 
+// 消息输入区域组件
+// 用于输入消息和选择文件的组件
 class MessageInputArea extends StatefulWidget {
   final Function(String content, String? filePath, String? fileType, Uint8List? fileBytes) onSend;
 

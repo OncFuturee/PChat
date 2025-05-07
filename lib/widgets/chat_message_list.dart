@@ -3,6 +3,8 @@ import 'text_message_widget.dart';
 import 'image_message_widget.dart';
 import 'file_message_widget.dart';
 
+// 聊天消息列表组件
+// 用于显示聊天记录的列表，支持文本、图片和文件消息
 class ChatMessageList extends StatelessWidget {
   final List<Map<String, dynamic>> messages; // 消息列表
   final bool isGroupChat; // 是否为群组聊天
