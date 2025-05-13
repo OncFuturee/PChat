@@ -16,6 +16,7 @@ dependencies:
   hive_flutter: ^1.1.0 # Hive 的 Flutter 插件
   path_provider: ^2.0.12 # 用于获取文件路径
   file_picker: ^5.3.2 # 文件选择器插件
+  provider: ^6.1.5 # 状态管理插件
 
 dev_dependencies:
   flutter_test:

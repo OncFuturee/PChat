@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'chat_screen.dart';
 import 'group_chat_screen.dart';
-import '../widgets/global_notification.dart';
+import '../widgets/global_message/message_provider.dart';
 
 // 主页面
 // 用于显示聊天列表和聊天界面
@@ -35,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       flex: 1,
                       child: Column(
                         children: [
-                          _buildTopStatusBar(),
+                          _buildTopStatusBar(context),
                           Expanded(child: _buildChatList()),
                         ],
                       ),
@@ -58,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               : Column(
                   children: [
-                    _buildTopStatusBar(),
+                    _buildTopStatusBar(context),
                     Expanded(child: _buildChatList()),
                   ],
                 ),
@@ -172,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildTopStatusBar() {
+  Widget _buildTopStatusBar(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       color: Colors.blue[50],
@@ -220,14 +221,15 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.more_vert),
             onSelected: (value) {
               if (value == 'scan') {
-                GlobalNotification.show(
-                  context,
-                  '扫描功能尚未实现',
+                
+                context.read<MessageProvider>().showMessage(
+                  '这是一条成功消息',
+                  type: MessageType.success,
                 );
               } else if (value == 'add_friend') {
-                GlobalNotification.show(
-                  context,
-                  '添加好友功能尚未实现',
+                context.read<MessageProvider>().showMessage(
+                  '这是一条错误消息',
+                  type: MessageType.error,
                 );
               }
             },
