@@ -62,7 +62,7 @@ class GlobalMessageWidget extends StatelessWidget {
                       IconButton(
                         icon: const Icon(Icons.close, color: Colors.white),
                         onPressed: () {
-                          context.read<MessageProvider>().currentMessage = null;
+                          context.read<MessageProvider>().closeCurrentMessage();
                         },
                       ),
                     ],

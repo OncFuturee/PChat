@@ -187,14 +187,14 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 const CircleAvatar(
                   radius: 20,
-                  child: Icon(Icons.person),
+                  backgroundImage: NetworkImage("https://avatars.githubusercontent.com/u/95522832?s=400&u=4457fc9da4f1c1e05120d8712cc40c695dbece16&v=4")
                 ),
                 const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Username',
+                      'OncFuturee',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Row(
@@ -222,15 +222,9 @@ class _HomeScreenState extends State<HomeScreen> {
             onSelected: (value) {
               if (value == 'scan') {
                 
-                context.read<MessageProvider>().showMessage(
-                  '这是一条成功消息',
-                  type: MessageType.success,
-                );
+                context.read<MessageProvider>().showSuccess('扫描功能未实现');
               } else if (value == 'add_friend') {
-                context.read<MessageProvider>().showMessage(
-                  '这是一条错误消息',
-                  type: MessageType.error,
-                );
+                context.read<MessageProvider>().showError('添加好友功能未实现');
               }
             },
             itemBuilder: (context) => [
@@ -269,13 +263,10 @@ class _HomeScreenState extends State<HomeScreen> {
               });
             } else {
               // 小屏幕模式下跳转到聊天界面
-              Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => isGroup
-                      ? GroupChatScreen(groupIndex: index - 10)
-                      : ChatScreen(chatIndex: index),
-                ),
+                isGroup ? '/groupChatScreen' : '/chatScreen',
+                arguments: isGroup ? index - 10 : index,
               );
             }
           },

@@ -4,12 +4,14 @@ import '../data_storage/data_repository.dart';
 import '../widgets/message_input_area.dart';
 
 class GroupChatScreen extends StatefulWidget {
-  final int groupIndex;
+  int groupIndex;
 
-  const GroupChatScreen({super.key, required this.groupIndex});
+  GroupChatScreen({super.key, this.groupIndex = 0});
 
   @override
-  _GroupChatScreenState createState() => _GroupChatScreenState();
+  _GroupChatScreenState createState() {
+    return _GroupChatScreenState();
+  }
 }
 
 class _GroupChatScreenState extends State<GroupChatScreen> {
@@ -60,6 +62,8 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final int groupIndex = ModalRoute.of(context)!.settings.arguments as int? ?? 0;
+    widget.groupIndex = groupIndex; // 更新 groupIndex
     return Scaffold(
       appBar: AppBar(title: Text('Group ${widget.groupIndex + 1}')),
       body: Column(

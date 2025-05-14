@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart'; // 添加导入
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pchat/widgets/global_message/message_provider.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart'; // 添加导入
-import 'package:flutter/foundation.dart'; // 添加导入
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:flutter/foundation.dart';
 import 'views/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'widgets/global_message/app_wrapper.dart';
+import 'views/chat_screen.dart';
+import 'views/group_chat_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,17 +38,23 @@ class ChatApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppWrapper(
       child:MaterialApp(
-      title: 'Chat App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+        title: 'Chat App',
+        //路由表定义
+        routes: {
+          //'/': (context) => const HomeScreen(),
+          '/groupChatScreen': (context) => GroupChatScreen(),
+          '/chatScreen': (context) => ChatScreen(),
+        },
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: Stack(
+          clipBehavior: Clip.none, // 确保超出范围的组件不会被裁剪
+          children: [
+            const HomeScreen(), // 主页面
+          ],
+        ),
       ),
-      home: Stack(
-        clipBehavior: Clip.none, // 确保超出范围的组件不会被裁剪
-        children: [
-          const HomeScreen(), // 主页面
-        ],
-      ),
-    ),
     );
   }
 }

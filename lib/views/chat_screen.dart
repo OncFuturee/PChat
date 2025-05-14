@@ -4,12 +4,14 @@ import '../data_storage/data_repository.dart';
 import '../widgets/message_input_area.dart';
 
 class ChatScreen extends StatefulWidget {
-  final int chatIndex;
+  int chatIndex;
 
-  const ChatScreen({super.key, required this.chatIndex});
+  ChatScreen({super.key, this.chatIndex = 0});
 
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  _ChatScreenState createState() {
+    return _ChatScreenState();
+  }
 }
 
 class _ChatScreenState extends State<ChatScreen> {
@@ -60,6 +62,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final int chatIndex = ModalRoute.of(context)!.settings.arguments as int? ?? 0;
+    widget.chatIndex = chatIndex; // 更新 chatIndex
     return Scaffold(
       appBar: AppBar(title: Text('Chat ${widget.chatIndex}')),
       body: Column(
@@ -81,6 +85,7 @@ class _ChatScreenState extends State<ChatScreen> {
               print('Message content: $content');
             },
           ),
+          const SizedBox(height: 10),// 添加间距
         ],
       ),
     );
