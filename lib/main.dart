@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'widgets/global_message/app_wrapper.dart';
 import 'views/chat_screen.dart';
 import 'views/group_chat_screen.dart';
+import 'config/app_config.dart'; // 全局配置
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,10 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => MessageProvider()),
+        // 提供 MessageProvider
+        ChangeNotifierProvider(create: (context) => MessageProvider()),
+        // 全局配置
+        Provider(create: (context) => AppConfig()),
       ],
       child: const ChatApp(),
     ),

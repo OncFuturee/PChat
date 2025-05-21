@@ -2,48 +2,65 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'message_provider.dart';
 
-class GlobalMessageWidget extends StatelessWidget {
+class GlobalMessageWidget extends StatefulWidget {
+
   const GlobalMessageWidget({super.key});
 
   @override
+  State<GlobalMessageWidget> createState() => _GlobalMessageWidgetState();
+}
+
+class _GlobalMessageWidgetState extends State<GlobalMessageWidget>
+    with TickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation<double> positionAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    
+    // 初始化动画控制器
+    animationController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this, // 使用当前 State 作为 vsync
+    );
+    
+    // 初始化动画
+    positionAnimation = Tween<double>(
+      begin: -100, // 屏幕顶部外
+      end: 20,     // 目标位置
+    ).animate(CurvedAnimation(
+      parent: animationController,
+      curve: Curves.easeOut,
+      reverseCurve: Curves.easeIn,
+    ));
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose(); // 释放资源
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final provider = context.watch<MessageProvider>();
+    debugPrint('消息框build');
+    final provider = Provider.of<MessageProvider>(context, listen: true);
     final message = provider.currentMessage;
 
     if (message == null) {
       return const SizedBox.shrink();
     }
 
-    // 计算动画偏移量 - 从屏幕顶部外到目标位置
-    final bool isLastMessage = provider.queueLength == 0;
-    final double startOffset = -100; // 初始位置在屏幕顶部外
-    final double endOffset = 20;     // 最终位置在屏幕内顶部
-
-    // 创建动画控制器和动画
-    final AnimationController animationController = AnimationController(
-      duration: const Duration(milliseconds: 500),
-      vsync: ScaffoldMessenger.of(context),
-    );
-
-    final Animation<double> positionAnimation = Tween<double>(
-      begin: startOffset,
-      end: endOffset,
-    ).animate(CurvedAnimation(
-      parent: animationController,
-      curve: isLastMessage ? Curves.easeIn : Curves.easeOut,
-      reverseCurve: isLastMessage ? Curves.easeOut : Curves.easeIn,
-    ));
-
     // 控制动画播放
+    final bool isLastMessage = provider.queueLength == 0;
+
     if (message.isNew) {
-      // 新消息开始动画
       animationController.forward();
-      // 标记消息为已显示
       WidgetsBinding.instance.addPostFrameCallback((_) {
         provider.markMessageAsShown();
       });
     } else if (isLastMessage) {
-      // 最后一条消息反向播放动画
       animationController.reverse();
     }
 
@@ -57,7 +74,6 @@ class GlobalMessageWidget extends StatelessWidget {
               child: Container(color: Colors.transparent),
             ),
           ),
-        // 使用AnimatedBuilder应用动画
         AnimatedBuilder(
           animation: positionAnimation,
           builder: (context, child) {
@@ -103,7 +119,7 @@ class GlobalMessageWidget extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.2),
+                                color: Colors.white.withAlpha(100),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Text(

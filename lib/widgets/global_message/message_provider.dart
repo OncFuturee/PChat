@@ -11,7 +11,7 @@ class Message {
 
   Message({
     required this.text,
-    this.duration = const Duration(seconds: 3), // 默认3秒
+    this.duration = const Duration(seconds: 2), // 默认2秒
     this.type = MessageType.info, // 默认信息类型
     this.blocking = false, // 默认不显示遮罩
     this.isNew = true, // 默认新创建的消息为新消息
@@ -36,6 +36,7 @@ class MessageProvider extends ChangeNotifier {
     // 如果当前没有显示消息，则开始处理队列
     if (_currentMessage == null && _timer == null) {
       _showNextMessage();
+      return;
     }
     notifyListeners();
   }

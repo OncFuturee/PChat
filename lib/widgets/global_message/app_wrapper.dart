@@ -15,7 +15,7 @@ class AppWrapper extends StatelessWidget {
         child: Stack(
           children: [
             child,
-            const Positioned.fill(
+            Positioned.fill(
               child: GlobalMessageWidget(),
             ),
           ],
