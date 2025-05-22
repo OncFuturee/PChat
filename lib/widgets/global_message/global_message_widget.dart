@@ -45,6 +45,7 @@ class _GlobalMessageWidgetState extends State<GlobalMessageWidget>
   @override
   Widget build(BuildContext context) {
     debugPrint('消息框build');
+    
     final provider = Provider.of<MessageProvider>(context, listen: true);
     final message = provider.currentMessage;
 
@@ -55,13 +56,12 @@ class _GlobalMessageWidgetState extends State<GlobalMessageWidget>
     // 控制动画播放
     final bool isLastMessage = provider.queueLength == 0;
 
-    if (message.isNew) {
-      animationController.forward();
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        provider.markMessageAsShown();
-      });
-    } else if (isLastMessage) {
+    if (isLastMessage) {
       animationController.reverse();
+      debugPrint('消息框reverse');
+    } else {
+      animationController.forward();
+      debugPrint('消息框forward');
     }
 
     return Stack(

@@ -7,14 +7,12 @@ class Message {
   final Duration duration;
   final MessageType type;
   final bool blocking; // 是否显示遮罩层
-  bool isNew; // 是否为新消息
 
   Message({
     required this.text,
     this.duration = const Duration(seconds: 2), // 默认2秒
     this.type = MessageType.info, // 默认信息类型
     this.blocking = false, // 默认不显示遮罩
-    this.isNew = true, // 默认新创建的消息为新消息
   });
 }
 
@@ -106,14 +104,6 @@ class MessageProvider extends ChangeNotifier {
     _currentMessage = null;
     _showNextMessage();
   }
-
-  // 标记消息已经显示过，避免动画重复播放
-  void markMessageAsShown() {
-  if (currentMessage != null) {
-    currentMessage!.isNew = false;
-    notifyListeners();
-  }
-}
 
   @override
   void dispose() {
