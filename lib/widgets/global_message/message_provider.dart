@@ -7,12 +7,14 @@ class Message {
   final Duration duration;
   final MessageType type;
   final bool blocking; // 是否显示遮罩层
+  bool shouldShow; // 是否显示消息
 
   Message({
     required this.text,
     this.duration = const Duration(seconds: 2), // 默认2秒
     this.type = MessageType.info, // 默认信息类型
     this.blocking = false, // 默认不显示遮罩
+    this.shouldShow = true, // 默认显示消息
   });
 }
 
@@ -32,7 +34,7 @@ class MessageProvider extends ChangeNotifier {
   void addMessage(Message message) {
     _messageQueue.add(message);
     // 如果当前没有显示消息，则开始处理队列
-    if (_currentMessage == null && _timer == null) {
+    if (_timer?.isActive != true) {
       _showNextMessage();
       return;
     }
@@ -81,9 +83,8 @@ class MessageProvider extends ChangeNotifier {
 
   // 显示队列中的下一条消息
   void _showNextMessage() {
+    // 如果没有消息，直接返回
     if (_messageQueue.isEmpty) {
-      _currentMessage = null;
-      _timer = null;
       notifyListeners();
       return;
     }
@@ -93,7 +94,7 @@ class MessageProvider extends ChangeNotifier {
     
     _timer = Timer(_currentMessage!.duration, () {
       // 当前消息显示时间结束，处理下一条
-      _currentMessage = null;
+      _currentMessage?.shouldShow = false; // 设置当前消息不显示
       _showNextMessage();
     });
   }
@@ -101,7 +102,7 @@ class MessageProvider extends ChangeNotifier {
   // 手动关闭当前消息
   void closeCurrentMessage() {
     _timer?.cancel();
-    _currentMessage = null;
+    _currentMessage?.shouldShow = false; // 设置当前消息不显示
     _showNextMessage();
   }
 
